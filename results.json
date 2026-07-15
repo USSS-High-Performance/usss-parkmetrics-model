@@ -1,0 +1,1096 @@
+{
+  "balanced_8": {
+    "feature_cols": [
+      "peak_g_mag",
+      "std_g_mag",
+      "peak_sma150",
+      "peak_hp8_vertical",
+      "peak_rms150",
+      "peak_jerk_mag",
+      "max_elevated_dur",
+      "peak_hp8_planar"
+    ],
+    "models": {
+      "logreg": {
+        "cv": [
+          {
+            "fold": 0,
+            "held_out_athlete": "Cael McCarthy",
+            "n_train": 186,
+            "n_val": 123,
+            "n_val_positive": 49,
+            "ap": 0.7793897479749523,
+            "roc_auc": 0.8008825151682295,
+            "default_threshold": {
+              "threshold": 0.5,
+              "tp": 39,
+              "fp": 26,
+              "fn": 10,
+              "tn": 48,
+              "precision": 0.6,
+              "recall": 0.7959183673469388,
+              "f1": 0.6842105263157895
+            },
+            "recall_tuned_threshold": {
+              "threshold": 0.19951708027516835,
+              "tp": 45,
+              "fp": 60,
+              "fn": 4,
+              "tn": 14,
+              "precision": 0.42857142857142855,
+              "recall": 0.9183673469387755,
+              "f1": 0.5844155844155844
+            }
+          },
+          {
+            "fold": 1,
+            "held_out_athlete": "Jeffery Brown",
+            "n_train": 199,
+            "n_val": 110,
+            "n_val_positive": 29,
+            "ap": 0.7252017786064903,
+            "roc_auc": 0.8922945934440187,
+            "default_threshold": {
+              "threshold": 0.5,
+              "tp": 28,
+              "fp": 31,
+              "fn": 1,
+              "tn": 50,
+              "precision": 0.4745762711864407,
+              "recall": 0.9655172413793104,
+              "f1": 0.6363636363636364
+            },
+            "recall_tuned_threshold": {
+              "threshold": 0.5388438516839649,
+              "tp": 27,
+              "fp": 28,
+              "fn": 2,
+              "tn": 53,
+              "precision": 0.4909090909090909,
+              "recall": 0.9310344827586207,
+              "f1": 0.6428571428571429
+            }
+          },
+          {
+            "fold": 2,
+            "held_out_athlete": "Piper Arnold",
+            "n_train": 233,
+            "n_val": 76,
+            "n_val_positive": 31,
+            "ap": 0.652734119440761,
+            "roc_auc": 0.6824372759856632,
+            "default_threshold": {
+              "threshold": 0.5,
+              "tp": 6,
+              "fp": 1,
+              "fn": 25,
+              "tn": 44,
+              "precision": 0.8571428571428571,
+              "recall": 0.1935483870967742,
+              "f1": 0.3157894736842105
+            },
+            "recall_tuned_threshold": {
+              "threshold": 0.10993271545695976,
+              "tp": 28,
+              "fp": 27,
+              "fn": 3,
+              "tn": 18,
+              "precision": 0.509090909090909,
+              "recall": 0.9032258064516129,
+              "f1": 0.6511627906976745
+            }
+          }
+        ],
+        "held_out_test": {
+          "ap": 0.8505594744458576,
+          "roc_auc": 0.8055555555555556,
+          "default_threshold": {
+            "threshold": 0.5,
+            "tp": 11,
+            "fp": 3,
+            "fn": 7,
+            "tn": 11,
+            "precision": 0.7857142857142857,
+            "recall": 0.6111111111111112,
+            "f1": 0.6875
+          },
+          "recall_tuned_threshold": {
+            "threshold": 0.20122626283122302,
+            "tp": 17,
+            "fp": 9,
+            "fn": 1,
+            "tn": 5,
+            "precision": 0.6538461538461539,
+            "recall": 0.9444444444444444,
+            "f1": 0.7727272727272727
+          },
+          "n_test": 32,
+          "n_test_positive": 18
+        }
+      },
+      "gbm": {
+        "cv": [
+          {
+            "fold": 0,
+            "held_out_athlete": "Cael McCarthy",
+            "n_train": 186,
+            "n_val": 123,
+            "n_val_positive": 49,
+            "ap": 0.7183128869771362,
+            "roc_auc": 0.7854384997242141,
+            "default_threshold": {
+              "threshold": 0.5,
+              "tp": 35,
+              "fp": 12,
+              "fn": 14,
+              "tn": 62,
+              "precision": 0.7446808510638298,
+              "recall": 0.7142857142857143,
+              "f1": 0.7291666666666666
+            },
+            "recall_tuned_threshold": {
+              "threshold": 0.053946282430031404,
+              "tp": 45,
+              "fp": 52,
+              "fn": 4,
+              "tn": 22,
+              "precision": 0.4639175257731959,
+              "recall": 0.9183673469387755,
+              "f1": 0.6164383561643836
+            }
+          },
+          {
+            "fold": 1,
+            "held_out_athlete": "Jeffery Brown",
+            "n_train": 199,
+            "n_val": 110,
+            "n_val_positive": 29,
+            "ap": 0.6519524117727304,
+            "roc_auc": 0.8158790974882929,
+            "default_threshold": {
+              "threshold": 0.5,
+              "tp": 23,
+              "fp": 28,
+              "fn": 6,
+              "tn": 53,
+              "precision": 0.45098039215686275,
+              "recall": 0.7931034482758621,
+              "f1": 0.575
+            },
+            "recall_tuned_threshold": {
+              "threshold": 0.2303362347650006,
+              "tp": 27,
+              "fp": 60,
+              "fn": 2,
+              "tn": 21,
+              "precision": 0.3103448275862069,
+              "recall": 0.9310344827586207,
+              "f1": 0.46551724137931033
+            }
+          },
+          {
+            "fold": 2,
+            "held_out_athlete": "Piper Arnold",
+            "n_train": 233,
+            "n_val": 76,
+            "n_val_positive": 31,
+            "ap": 0.523107789860601,
+            "roc_auc": 0.4906810035842294,
+            "default_threshold": {
+              "threshold": 0.5,
+              "tp": 5,
+              "fp": 1,
+              "fn": 26,
+              "tn": 44,
+              "precision": 0.8333333333333334,
+              "recall": 0.16129032258064516,
+              "f1": 0.2702702702702703
+            },
+            "recall_tuned_threshold": {
+              "threshold": 0.032417060495699694,
+              "tp": 28,
+              "fp": 43,
+              "fn": 3,
+              "tn": 2,
+              "precision": 0.39436619718309857,
+              "recall": 0.9032258064516129,
+              "f1": 0.5490196078431373
+            }
+          }
+        ],
+        "held_out_test": {
+          "ap": 0.8328774007322601,
+          "roc_auc": 0.8095238095238095,
+          "default_threshold": {
+            "threshold": 0.5,
+            "tp": 12,
+            "fp": 3,
+            "fn": 6,
+            "tn": 11,
+            "precision": 0.8,
+            "recall": 0.6666666666666666,
+            "f1": 0.7272727272727273
+          },
+          "recall_tuned_threshold": {
+            "threshold": 0.09652263437708995,
+            "tp": 17,
+            "fp": 6,
+            "fn": 1,
+            "tn": 8,
+            "precision": 0.7391304347826086,
+            "recall": 0.9444444444444444,
+            "f1": 0.8292682926829268
+          },
+          "n_test": 32,
+          "n_test_positive": 18
+        }
+      },
+      "mlp": {
+        "cv": [
+          {
+            "fold": 0,
+            "held_out_athlete": "Cael McCarthy",
+            "n_train": 186,
+            "n_val": 123,
+            "n_val_positive": 49,
+            "ap": 0.31964521866353174,
+            "roc_auc": 0.3168781025923883,
+            "default_threshold": {
+              "threshold": 0.5,
+              "tp": 47,
+              "fp": 72,
+              "fn": 2,
+              "tn": 2,
+              "precision": 0.3949579831932773,
+              "recall": 0.9591836734693877,
+              "f1": 0.5595238095238095
+            },
+            "recall_tuned_threshold": {
+              "threshold": 0.5265415571862382,
+              "tp": 45,
+              "fp": 72,
+              "fn": 4,
+              "tn": 2,
+              "precision": 0.38461538461538464,
+              "recall": 0.9183673469387755,
+              "f1": 0.5421686746987951
+            }
+          },
+          {
+            "fold": 1,
+            "held_out_athlete": "Jeffery Brown",
+            "n_train": 199,
+            "n_val": 110,
+            "n_val_positive": 29,
+            "ap": 0.2899494336182497,
+            "roc_auc": 0.4397616006811409,
+            "default_threshold": {
+              "threshold": 0.5,
+              "tp": 28,
+              "fp": 81,
+              "fn": 1,
+              "tn": 0,
+              "precision": 0.25688073394495414,
+              "recall": 0.9655172413793104,
+              "f1": 0.4057971014492754
+            },
+            "recall_tuned_threshold": {
+              "threshold": 0.5828047090210465,
+              "tp": 27,
+              "fp": 81,
+              "fn": 2,
+              "tn": 0,
+              "precision": 0.25,
+              "recall": 0.9310344827586207,
+              "f1": 0.39416058394160586
+            }
+          },
+          {
+            "fold": 2,
+            "held_out_athlete": "Piper Arnold",
+            "n_train": 233,
+            "n_val": 76,
+            "n_val_positive": 31,
+            "ap": 0.3189772266415952,
+            "roc_auc": 0.24802867383512542,
+            "default_threshold": {
+              "threshold": 0.5,
+              "tp": 31,
+              "fp": 45,
+              "fn": 0,
+              "tn": 0,
+              "precision": 0.40789473684210525,
+              "recall": 1.0,
+              "f1": 0.5794392523364486
+            },
+            "recall_tuned_threshold": {
+              "threshold": 0.6356919703000192,
+              "tp": 28,
+              "fp": 45,
+              "fn": 3,
+              "tn": 0,
+              "precision": 0.3835616438356164,
+              "recall": 0.9032258064516129,
+              "f1": 0.5384615384615384
+            }
+          }
+        ],
+        "held_out_test": {
+          "ap": 0.6675593590138709,
+          "roc_auc": 0.4801587301587301,
+          "default_threshold": {
+            "threshold": 0.5,
+            "tp": 18,
+            "fp": 14,
+            "fn": 0,
+            "tn": 0,
+            "precision": 0.5625,
+            "recall": 1.0,
+            "f1": 0.72
+          },
+          "recall_tuned_threshold": {
+            "threshold": 0.6339241008769053,
+            "tp": 17,
+            "fp": 14,
+            "fn": 1,
+            "tn": 0,
+            "precision": 0.5483870967741935,
+            "recall": 0.9444444444444444,
+            "f1": 0.6938775510204082
+          },
+          "n_test": 32,
+          "n_test_positive": 18
+        }
+      }
+    }
+  },
+  "full_10": {
+    "feature_cols": [
+      "peak_g_mag",
+      "std_g_mag",
+      "peak_sma150",
+      "peak_hp8_vertical",
+      "peak_rms150",
+      "peak_jerk_mag",
+      "max_elevated_dur",
+      "peak_hp8_planar",
+      "pitch_range",
+      "rot_x_range"
+    ],
+    "models": {
+      "logreg": {
+        "cv": [
+          {
+            "fold": 0,
+            "held_out_athlete": "Cael McCarthy",
+            "n_train": 186,
+            "n_val": 123,
+            "n_val_positive": 49,
+            "ap": 0.7498360344014487,
+            "roc_auc": 0.7752344180915609,
+            "default_threshold": {
+              "threshold": 0.5,
+              "tp": 40,
+              "fp": 40,
+              "fn": 9,
+              "tn": 34,
+              "precision": 0.5,
+              "recall": 0.8163265306122449,
+              "f1": 0.6201550387596899
+            },
+            "recall_tuned_threshold": {
+              "threshold": 0.2551304702721526,
+              "tp": 45,
+              "fp": 57,
+              "fn": 4,
+              "tn": 17,
+              "precision": 0.4411764705882353,
+              "recall": 0.9183673469387755,
+              "f1": 0.5960264900662252
+            }
+          },
+          {
+            "fold": 1,
+            "held_out_athlete": "Jeffery Brown",
+            "n_train": 199,
+            "n_val": 110,
+            "n_val_positive": 29,
+            "ap": 0.7378496751848637,
+            "roc_auc": 0.8957002979991486,
+            "default_threshold": {
+              "threshold": 0.5,
+              "tp": 27,
+              "fp": 32,
+              "fn": 2,
+              "tn": 49,
+              "precision": 0.4576271186440678,
+              "recall": 0.9310344827586207,
+              "f1": 0.6136363636363636
+            },
+            "recall_tuned_threshold": {
+              "threshold": 0.5556502242170523,
+              "tp": 27,
+              "fp": 25,
+              "fn": 2,
+              "tn": 56,
+              "precision": 0.5192307692307693,
+              "recall": 0.9310344827586207,
+              "f1": 0.6666666666666666
+            }
+          },
+          {
+            "fold": 2,
+            "held_out_athlete": "Piper Arnold",
+            "n_train": 233,
+            "n_val": 76,
+            "n_val_positive": 31,
+            "ap": 0.61714341835975,
+            "roc_auc": 0.6551971326164875,
+            "default_threshold": {
+              "threshold": 0.5,
+              "tp": 6,
+              "fp": 1,
+              "fn": 25,
+              "tn": 44,
+              "precision": 0.8571428571428571,
+              "recall": 0.1935483870967742,
+              "f1": 0.3157894736842105
+            },
+            "recall_tuned_threshold": {
+              "threshold": 0.10376079828823927,
+              "tp": 28,
+              "fp": 29,
+              "fn": 3,
+              "tn": 16,
+              "precision": 0.49122807017543857,
+              "recall": 0.9032258064516129,
+              "f1": 0.6363636363636364
+            }
+          }
+        ],
+        "held_out_test": {
+          "ap": 0.8479462741898243,
+          "roc_auc": 0.7857142857142857,
+          "default_threshold": {
+            "threshold": 0.5,
+            "tp": 11,
+            "fp": 3,
+            "fn": 7,
+            "tn": 11,
+            "precision": 0.7857142857142857,
+            "recall": 0.6111111111111112,
+            "f1": 0.6875
+          },
+          "recall_tuned_threshold": {
+            "threshold": 0.17021799050707564,
+            "tp": 17,
+            "fp": 9,
+            "fn": 1,
+            "tn": 5,
+            "precision": 0.6538461538461539,
+            "recall": 0.9444444444444444,
+            "f1": 0.7727272727272727
+          },
+          "n_test": 32,
+          "n_test_positive": 18
+        }
+      },
+      "gbm": {
+        "cv": [
+          {
+            "fold": 0,
+            "held_out_athlete": "Cael McCarthy",
+            "n_train": 186,
+            "n_val": 123,
+            "n_val_positive": 49,
+            "ap": 0.7194933017622365,
+            "roc_auc": 0.7866795366795366,
+            "default_threshold": {
+              "threshold": 0.5,
+              "tp": 32,
+              "fp": 14,
+              "fn": 17,
+              "tn": 60,
+              "precision": 0.6956521739130435,
+              "recall": 0.6530612244897959,
+              "f1": 0.6736842105263158
+            },
+            "recall_tuned_threshold": {
+              "threshold": 0.04804453822749271,
+              "tp": 45,
+              "fp": 54,
+              "fn": 4,
+              "tn": 20,
+              "precision": 0.45454545454545453,
+              "recall": 0.9183673469387755,
+              "f1": 0.6081081081081081
+            }
+          },
+          {
+            "fold": 1,
+            "held_out_athlete": "Jeffery Brown",
+            "n_train": 199,
+            "n_val": 110,
+            "n_val_positive": 29,
+            "ap": 0.6972039149614742,
+            "roc_auc": 0.8424861643252448,
+            "default_threshold": {
+              "threshold": 0.5,
+              "tp": 25,
+              "fp": 27,
+              "fn": 4,
+              "tn": 54,
+              "precision": 0.4807692307692308,
+              "recall": 0.8620689655172413,
+              "f1": 0.6172839506172839
+            },
+            "recall_tuned_threshold": {
+              "threshold": 0.2602840293308021,
+              "tp": 27,
+              "fp": 53,
+              "fn": 2,
+              "tn": 28,
+              "precision": 0.3375,
+              "recall": 0.9310344827586207,
+              "f1": 0.4954128440366973
+            }
+          },
+          {
+            "fold": 2,
+            "held_out_athlete": "Piper Arnold",
+            "n_train": 233,
+            "n_val": 76,
+            "n_val_positive": 31,
+            "ap": 0.5602221879890603,
+            "roc_auc": 0.5562724014336918,
+            "default_threshold": {
+              "threshold": 0.5,
+              "tp": 5,
+              "fp": 0,
+              "fn": 26,
+              "tn": 45,
+              "precision": 1.0,
+              "recall": 0.16129032258064516,
+              "f1": 0.2777777777777778
+            },
+            "recall_tuned_threshold": {
+              "threshold": 0.028006647909449147,
+              "tp": 29,
+              "fp": 42,
+              "fn": 2,
+              "tn": 3,
+              "precision": 0.4084507042253521,
+              "recall": 0.9354838709677419,
+              "f1": 0.5686274509803921
+            }
+          }
+        ],
+        "held_out_test": {
+          "ap": 0.853829781684641,
+          "roc_auc": 0.8174603174603174,
+          "default_threshold": {
+            "threshold": 0.5,
+            "tp": 12,
+            "fp": 3,
+            "fn": 6,
+            "tn": 11,
+            "precision": 0.8,
+            "recall": 0.6666666666666666,
+            "f1": 0.7272727272727273
+          },
+          "recall_tuned_threshold": {
+            "threshold": 0.1142132948561978,
+            "tp": 17,
+            "fp": 6,
+            "fn": 1,
+            "tn": 8,
+            "precision": 0.7391304347826086,
+            "recall": 0.9444444444444444,
+            "f1": 0.8292682926829268
+          },
+          "n_test": 32,
+          "n_test_positive": 18
+        }
+      },
+      "mlp": {
+        "cv": [
+          {
+            "fold": 0,
+            "held_out_athlete": "Cael McCarthy",
+            "n_train": 186,
+            "n_val": 123,
+            "n_val_positive": 49,
+            "ap": 0.6670592874986688,
+            "roc_auc": 0.7120794263651407,
+            "default_threshold": {
+              "threshold": 0.5,
+              "tp": 26,
+              "fp": 20,
+              "fn": 23,
+              "tn": 54,
+              "precision": 0.5652173913043478,
+              "recall": 0.5306122448979592,
+              "f1": 0.5473684210526316
+            },
+            "recall_tuned_threshold": {
+              "threshold": 0.2805676294206161,
+              "tp": 45,
+              "fp": 56,
+              "fn": 4,
+              "tn": 18,
+              "precision": 0.44554455445544555,
+              "recall": 0.9183673469387755,
+              "f1": 0.6
+            }
+          },
+          {
+            "fold": 1,
+            "held_out_athlete": "Jeffery Brown",
+            "n_train": 199,
+            "n_val": 110,
+            "n_val_positive": 29,
+            "ap": 0.7777510139399277,
+            "roc_auc": 0.8812260536398467,
+            "default_threshold": {
+              "threshold": 0.5,
+              "tp": 22,
+              "fp": 14,
+              "fn": 7,
+              "tn": 67,
+              "precision": 0.6111111111111112,
+              "recall": 0.7586206896551724,
+              "f1": 0.676923076923077
+            },
+            "recall_tuned_threshold": {
+              "threshold": 0.3264438155827831,
+              "tp": 27,
+              "fp": 31,
+              "fn": 2,
+              "tn": 50,
+              "precision": 0.46551724137931033,
+              "recall": 0.9310344827586207,
+              "f1": 0.6206896551724138
+            }
+          },
+          {
+            "fold": 2,
+            "held_out_athlete": "Piper Arnold",
+            "n_train": 233,
+            "n_val": 76,
+            "n_val_positive": 31,
+            "ap": 0.6536406224789164,
+            "roc_auc": 0.739068100358423,
+            "default_threshold": {
+              "threshold": 0.5,
+              "tp": 3,
+              "fp": 1,
+              "fn": 28,
+              "tn": 44,
+              "precision": 0.75,
+              "recall": 0.0967741935483871,
+              "f1": 0.17142857142857143
+            },
+            "recall_tuned_threshold": {
+              "threshold": 0.2259766718739886,
+              "tp": 28,
+              "fp": 27,
+              "fn": 3,
+              "tn": 18,
+              "precision": 0.509090909090909,
+              "recall": 0.9032258064516129,
+              "f1": 0.6511627906976745
+            }
+          }
+        ],
+        "held_out_test": {
+          "ap": 0.8355222908983726,
+          "roc_auc": 0.7936507936507936,
+          "default_threshold": {
+            "threshold": 0.5,
+            "tp": 6,
+            "fp": 3,
+            "fn": 12,
+            "tn": 11,
+            "precision": 0.6666666666666666,
+            "recall": 0.3333333333333333,
+            "f1": 0.4444444444444444
+          },
+          "recall_tuned_threshold": {
+            "threshold": 0.2330975062785538,
+            "tp": 17,
+            "fp": 6,
+            "fn": 1,
+            "tn": 8,
+            "precision": 0.7391304347826086,
+            "recall": 0.9444444444444444,
+            "f1": 0.8292682926829268
+          },
+          "n_test": 32,
+          "n_test_positive": 18
+        }
+      }
+    }
+  },
+  "minimal_5": {
+    "feature_cols": [
+      "peak_g_mag",
+      "std_g_mag",
+      "peak_hp8_vertical",
+      "peak_jerk_mag",
+      "max_elevated_dur"
+    ],
+    "models": {
+      "logreg": {
+        "cv": [
+          {
+            "fold": 0,
+            "held_out_athlete": "Cael McCarthy",
+            "n_train": 186,
+            "n_val": 123,
+            "n_val_positive": 49,
+            "ap": 0.7905632277636465,
+            "roc_auc": 0.8116381687810259,
+            "default_threshold": {
+              "threshold": 0.5,
+              "tp": 36,
+              "fp": 17,
+              "fn": 13,
+              "tn": 57,
+              "precision": 0.6792452830188679,
+              "recall": 0.7346938775510204,
+              "f1": 0.7058823529411765
+            },
+            "recall_tuned_threshold": {
+              "threshold": 0.21615206748218002,
+              "tp": 45,
+              "fp": 53,
+              "fn": 4,
+              "tn": 21,
+              "precision": 0.45918367346938777,
+              "recall": 0.9183673469387755,
+              "f1": 0.6122448979591837
+            }
+          },
+          {
+            "fold": 1,
+            "held_out_athlete": "Jeffery Brown",
+            "n_train": 199,
+            "n_val": 110,
+            "n_val_positive": 29,
+            "ap": 0.759038226487941,
+            "roc_auc": 0.909323116219668,
+            "default_threshold": {
+              "threshold": 0.5,
+              "tp": 28,
+              "fp": 29,
+              "fn": 1,
+              "tn": 52,
+              "precision": 0.49122807017543857,
+              "recall": 0.9655172413793104,
+              "f1": 0.6511627906976745
+            },
+            "recall_tuned_threshold": {
+              "threshold": 0.5276726357980756,
+              "tp": 27,
+              "fp": 26,
+              "fn": 2,
+              "tn": 55,
+              "precision": 0.5094339622641509,
+              "recall": 0.9310344827586207,
+              "f1": 0.6585365853658537
+            }
+          },
+          {
+            "fold": 2,
+            "held_out_athlete": "Piper Arnold",
+            "n_train": 233,
+            "n_val": 76,
+            "n_val_positive": 31,
+            "ap": 0.6461897198615212,
+            "roc_auc": 0.6759856630824373,
+            "default_threshold": {
+              "threshold": 0.5,
+              "tp": 7,
+              "fp": 1,
+              "fn": 24,
+              "tn": 44,
+              "precision": 0.875,
+              "recall": 0.22580645161290322,
+              "f1": 0.358974358974359
+            },
+            "recall_tuned_threshold": {
+              "threshold": 0.10171359537216423,
+              "tp": 28,
+              "fp": 30,
+              "fn": 3,
+              "tn": 15,
+              "precision": 0.4827586206896552,
+              "recall": 0.9032258064516129,
+              "f1": 0.6292134831460674
+            }
+          }
+        ],
+        "held_out_test": {
+          "ap": 0.8612118658314311,
+          "roc_auc": 0.8214285714285714,
+          "default_threshold": {
+            "threshold": 0.5,
+            "tp": 10,
+            "fp": 3,
+            "fn": 8,
+            "tn": 11,
+            "precision": 0.7692307692307693,
+            "recall": 0.5555555555555556,
+            "f1": 0.6451612903225806
+          },
+          "recall_tuned_threshold": {
+            "threshold": 0.24025482752016133,
+            "tp": 17,
+            "fp": 6,
+            "fn": 1,
+            "tn": 8,
+            "precision": 0.7391304347826086,
+            "recall": 0.9444444444444444,
+            "f1": 0.8292682926829268
+          },
+          "n_test": 32,
+          "n_test_positive": 18
+        }
+      },
+      "gbm": {
+        "cv": [
+          {
+            "fold": 0,
+            "held_out_athlete": "Cael McCarthy",
+            "n_train": 186,
+            "n_val": 123,
+            "n_val_positive": 49,
+            "ap": 0.7296737781263131,
+            "roc_auc": 0.7712355212355212,
+            "default_threshold": {
+              "threshold": 0.5,
+              "tp": 33,
+              "fp": 10,
+              "fn": 16,
+              "tn": 64,
+              "precision": 0.7674418604651163,
+              "recall": 0.673469387755102,
+              "f1": 0.717391304347826
+            },
+            "recall_tuned_threshold": {
+              "threshold": 0.04348435612903411,
+              "tp": 45,
+              "fp": 53,
+              "fn": 4,
+              "tn": 21,
+              "precision": 0.45918367346938777,
+              "recall": 0.9183673469387755,
+              "f1": 0.6122448979591837
+            }
+          },
+          {
+            "fold": 1,
+            "held_out_athlete": "Jeffery Brown",
+            "n_train": 199,
+            "n_val": 110,
+            "n_val_positive": 29,
+            "ap": 0.6405934621272716,
+            "roc_auc": 0.8586632609621115,
+            "default_threshold": {
+              "threshold": 0.5,
+              "tp": 27,
+              "fp": 30,
+              "fn": 2,
+              "tn": 51,
+              "precision": 0.47368421052631576,
+              "recall": 0.9310344827586207,
+              "f1": 0.627906976744186
+            },
+            "recall_tuned_threshold": {
+              "threshold": 0.5363446290920625,
+              "tp": 27,
+              "fp": 29,
+              "fn": 2,
+              "tn": 52,
+              "precision": 0.48214285714285715,
+              "recall": 0.9310344827586207,
+              "f1": 0.6352941176470588
+            }
+          },
+          {
+            "fold": 2,
+            "held_out_athlete": "Piper Arnold",
+            "n_train": 233,
+            "n_val": 76,
+            "n_val_positive": 31,
+            "ap": 0.5374056147051979,
+            "roc_auc": 0.5383512544802868,
+            "default_threshold": {
+              "threshold": 0.5,
+              "tp": 4,
+              "fp": 1,
+              "fn": 27,
+              "tn": 44,
+              "precision": 0.8,
+              "recall": 0.12903225806451613,
+              "f1": 0.2222222222222222
+            },
+            "recall_tuned_threshold": {
+              "threshold": 0.03153145344639843,
+              "tp": 28,
+              "fp": 43,
+              "fn": 3,
+              "tn": 2,
+              "precision": 0.39436619718309857,
+              "recall": 0.9032258064516129,
+              "f1": 0.5490196078431373
+            }
+          }
+        ],
+        "held_out_test": {
+          "ap": 0.7837031467545333,
+          "roc_auc": 0.7341269841269842,
+          "default_threshold": {
+            "threshold": 0.5,
+            "tp": 10,
+            "fp": 4,
+            "fn": 8,
+            "tn": 10,
+            "precision": 0.7142857142857143,
+            "recall": 0.5555555555555556,
+            "f1": 0.625
+          },
+          "recall_tuned_threshold": {
+            "threshold": 0.13712146825173643,
+            "tp": 17,
+            "fp": 7,
+            "fn": 1,
+            "tn": 7,
+            "precision": 0.7083333333333334,
+            "recall": 0.9444444444444444,
+            "f1": 0.8095238095238095
+          },
+          "n_test": 32,
+          "n_test_positive": 18
+        }
+      },
+      "mlp": {
+        "cv": [
+          {
+            "fold": 0,
+            "held_out_athlete": "Cael McCarthy",
+            "n_train": 186,
+            "n_val": 123,
+            "n_val_positive": 49,
+            "ap": 0.3428048594149915,
+            "roc_auc": 0.30253723110865965,
+            "default_threshold": {
+              "threshold": 0.5,
+              "tp": 0,
+              "fp": 0,
+              "fn": 49,
+              "tn": 74,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "recall_tuned_threshold": {
+              "threshold": 0.1742871130592633,
+              "tp": 45,
+              "fp": 73,
+              "fn": 4,
+              "tn": 1,
+              "precision": 0.3813559322033898,
+              "recall": 0.9183673469387755,
+              "f1": 0.5389221556886228
+            }
+          },
+          {
+            "fold": 1,
+            "held_out_athlete": "Jeffery Brown",
+            "n_train": 199,
+            "n_val": 110,
+            "n_val_positive": 29,
+            "ap": 0.24013346369304242,
+            "roc_auc": 0.4120902511707109,
+            "default_threshold": {
+              "threshold": 0.5,
+              "tp": 0,
+              "fp": 0,
+              "fn": 29,
+              "tn": 81,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "recall_tuned_threshold": {
+              "threshold": 0.24346858990629472,
+              "tp": 27,
+              "fp": 80,
+              "fn": 2,
+              "tn": 1,
+              "precision": 0.2523364485981308,
+              "recall": 0.9310344827586207,
+              "f1": 0.39705882352941174
+            }
+          },
+          {
+            "fold": 2,
+            "held_out_athlete": "Piper Arnold",
+            "n_train": 233,
+            "n_val": 76,
+            "n_val_positive": 31,
+            "ap": 0.4928545653132307,
+            "roc_auc": 0.5806451612903226,
+            "default_threshold": {
+              "threshold": 0.5,
+              "tp": 0,
+              "fp": 0,
+              "fn": 31,
+              "tn": 45,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "recall_tuned_threshold": {
+              "threshold": 0.35793348088714605,
+              "tp": 28,
+              "fp": 33,
+              "fn": 3,
+              "tn": 12,
+              "precision": 0.45901639344262296,
+              "recall": 0.9032258064516129,
+              "f1": 0.6086956521739131
+            }
+          }
+        ],
+        "held_out_test": {
+          "ap": 0.6203318299276002,
+          "roc_auc": 0.4801587301587302,
+          "default_threshold": {
+            "threshold": 0.5,
+            "tp": 0,
+            "fp": 0,
+            "fn": 18,
+            "tn": 14,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "recall_tuned_threshold": {
+            "threshold": 0.23330144725126445,
+            "tp": 17,
+            "fp": 14,
+            "fn": 1,
+            "tn": 0,
+            "precision": 0.5483870967741935,
+            "recall": 0.9444444444444444,
+            "f1": 0.6938775510204082
+          },
+          "n_test": 32,
+          "n_test_positive": 18
+        }
+      }
+    }
+  }
+}
