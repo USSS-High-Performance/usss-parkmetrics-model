@@ -110,12 +110,9 @@ crossed the trigger threshold:
    check: `g_mag >= 4.0`. Nothing else happens unless this fires.
 2. **Hysteresis groups a burst of consecutive above-threshold samples
    into one trigger candidate**, so one physical impact's rebound
-   bounces don't get treated as several separate hits. (Currently
-   implemented offline as a raw-sample-count gap in
-   `find_trigger_groups`; the on-device version described in
-   `project_context.md` instead waits for `g_mag` to drop below ~2.5g for
-   300ms before re-arming — these need to be reconciled, see next steps
-   item 3 below.)
+   bounces don't get treated as several separate hits. This is the
+   level-plus-duration re-arm scheme specified below ("Trigger hysteresis:
+   implementation spec"), not a simple fixed-count/fixed-time gap.
 3. **The peak sample within that group** (highest `g_mag`) becomes the
    anchor. The app waits ~300-500ms after the trigger fires so the full
    rebound has landed in the buffer before extracting features.
@@ -151,6 +148,113 @@ same `g_mag >= 4.0` condition the on-device trigger uses (see
 or evaluated on is a real trigger firing, matching what the phone will
 actually hand to the classifier at runtime. A negative row is a false
 trigger, not "calm riding data" the model would never see live.
+
+## Trigger hysteresis: implementation spec (Option A)
+
+This is the exact re-arm logic the app should implement, and the one
+`build_windowed_features.py` needs to be updated to match (currently it
+uses a simpler raw-sample-count gap; this spec is the target, level +
+duration based, behavior described in `project_context.md`).
+
+### Constants
+
+| Name | Value | Meaning |
+|---|---|---|
+| `TRIGGER_THRESHOLD_G` | 4.0 | `g_mag` at/above this fires the trigger. |
+| `REARM_THRESHOLD_G` | 2.5 | `g_mag` must drop below this before the trigger can arm again. |
+| `REARM_DURATION_MS` | 300 | How long `g_mag` must stay continuously below `REARM_THRESHOLD_G` before re-arming. |
+| `FEATURE_WINDOW_MS` | 500 | Half-width of the feature-extraction window around the peak sample (±500ms, i.e. 1 second total). |
+| `MAX_SUPPRESSION_MS` | 3000 (proposed) | Safety valve — see note below. Not in the original docs; recommended so the app can't get stuck suppressed forever. |
+
+### State machine
+
+Two states: **ARMED** and **SUPPRESSED**. Runs on every incoming sample,
+same cost as the plain threshold check (no extra per-sample work beyond a
+couple of comparisons and, while suppressed, tracking a running max).
+
+```
+state = ARMED
+candidate = null          # { peak_g_mag, peak_timestamp, peak_sample_idx }
+below_rearm_since = null  # timestamp when g_mag most recently dropped below REARM_THRESHOLD_G
+
+on each incoming sample (t, g_mag, sample_idx):
+    buffer_sample(t, g_mag, sample_idx, ...)   # always append to the raw ring buffer
+
+    if state == ARMED:
+        if g_mag >= TRIGGER_THRESHOLD_G:
+            state = SUPPRESSED
+            candidate = { peak_g_mag: g_mag, peak_timestamp: t, peak_sample_idx: sample_idx }
+            below_rearm_since = null
+
+    elif state == SUPPRESSED:
+        # keep tracking the true peak — the initial trigger sample is not
+        # necessarily the hardest hit; a rebound bounce can be bigger.
+        if g_mag > candidate.peak_g_mag:
+            candidate = { peak_g_mag: g_mag, peak_timestamp: t, peak_sample_idx: sample_idx }
+
+        if g_mag < REARM_THRESHOLD_G:
+            if below_rearm_since is null:
+                below_rearm_since = t
+            elif (t - below_rearm_since) >= REARM_DURATION_MS:
+                finalize_candidate(candidate)   # see "Feature extraction timing" below
+                state = ARMED
+                candidate = null
+                below_rearm_since = null
+        else:
+            below_rearm_since = null   # level came back up; reset the countdown
+
+        # safety valve: don't let one long high-energy stretch (e.g.
+        # sustained rough terrain) suppress the trigger indefinitely
+        if (t - candidate.peak_timestamp) >= MAX_SUPPRESSION_MS:
+            finalize_candidate(candidate)
+            state = ARMED
+            candidate = null
+            below_rearm_since = null
+```
+
+### Feature extraction timing
+
+`finalize_candidate` doesn't have to run the classifier immediately — it
+just means the candidate's peak is now known for certain (nothing later
+can retroactively beat it, since we've re-armed). The classifier still
+needs `FEATURE_WINDOW_MS` (500ms) of buffered samples *after*
+`candidate.peak_timestamp` to build the full ±500ms window, which by
+construction is already true by the time `finalize_candidate` runs in
+virtually all real cases (re-arming requires 300ms below 2.5g, which
+almost always lands after the peak + 500ms mark) — but guard it
+explicitly rather than assume:
+
+```
+def finalize_candidate(candidate):
+    wait_until(now >= candidate.peak_timestamp + FEATURE_WINDOW_MS)
+    window = buffer.slice(candidate.peak_timestamp - FEATURE_WINDOW_MS,
+                           candidate.peak_timestamp + FEATURE_WINDOW_MS)
+    features = extract_minimal_5(window, candidate)   # the 5 features defined above
+    probability = classify(features)                   # the logistic regression equation above
+    if probability >= DECISION_THRESHOLD:
+        report_hit(candidate.peak_timestamp, candidate.peak_elapsed_sec, candidate.peak_sample_idx)
+```
+
+### Practical notes for the app implementation
+
+- **Ring buffer sizing:** must hold at least `MAX_SUPPRESSION_MS +
+  FEATURE_WINDOW_MS` of raw samples (~3.5s at the values above) so the
+  window slice is always available when `finalize_candidate` runs.
+- **Detection latency:** a confirmed hit is reported at least
+  `REARM_DURATION_MS + FEATURE_WINDOW_MS` (~800ms) after the physical
+  impact, worst case up to `MAX_SUPPRESSION_MS + FEATURE_WINDOW_MS` for a
+  long rebound. Budget for this if the app surfaces hits live (e.g. a
+  toast/haptic) rather than only in a post-session summary.
+- **`DECISION_THRESHOLD`:** default 0.5, but `results.json`'s
+  `recall_tuned_threshold` gives a lower, higher-recall cutoff
+  (precision 0.74 at recall ≥ 0.90 for `minimal_5` + `logreg`) if missed
+  hits are worse than false positives for this app.
+- This state machine is what `build_windowed_features.py`'s
+  `find_trigger_groups` should be rewritten to match, so the trigger
+  candidates the model is trained on are produced by the identical logic
+  the app runs live — ideally both load `TRIGGER_THRESHOLD_G`,
+  `REARM_THRESHOLD_G`, `REARM_DURATION_MS`, and `FEATURE_WINDOW_MS` from
+  one shared config file rather than each hand-coding their own copies.
 
 ## Open questions / next steps
 
