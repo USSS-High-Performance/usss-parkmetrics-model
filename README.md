@@ -164,7 +164,7 @@ duration based, behavior described in `project_context.md`).
 | `REARM_THRESHOLD_G` | 2.5 | `g_mag` must drop below this before the trigger can arm again. |
 | `REARM_DURATION_MS` | 300 | How long `g_mag` must stay continuously below `REARM_THRESHOLD_G` before re-arming. |
 | `FEATURE_WINDOW_MS` | 500 | Half-width of the feature-extraction window around the peak sample (±500ms, i.e. 1 second total). |
-| `MAX_SUPPRESSION_MS` | 3000 (proposed) | Safety valve — see note below. Not in the original docs; recommended so the app can't get stuck suppressed forever. |
+| `MAX_SUPPRESSION_MS` | 3000 (proposed, optional) | Safety valve — see note below. Not in the original docs. Confirmed acceptable to skip entirely for jump detection specifically: two distinct jumps can't occur within a few hundred ms of each other, so unbounded suppression until the level-based re-arm condition is met carries no real risk of swallowing a genuine second hit. Keep it only if this trigger logic ever gets reused for something with faster repeat events. |
 
 ### State machine
 
@@ -255,6 +255,76 @@ def finalize_candidate(candidate):
   the app runs live — ideally both load `TRIGGER_THRESHOLD_G`,
   `REARM_THRESHOLD_G`, `REARM_DURATION_MS`, and `FEATURE_WINDOW_MS` from
   one shared config file rather than each hand-coding their own copies.
+
+## Session load metric (proposed, not yet implemented)
+
+Separate from hit detection: a running total of physical load accumulated
+over a whole session, counted only while the athlete is going downhill
+(excluding lift rides, walking, standing around). This hasn't been built
+or validated against data yet — it's a design proposal for the app to
+implement, laid out here for reference.
+
+### Recommended metric: accumulated jerk-based load
+
+```
+session_load += jerk_mag[i] * dt[i]     # only while downhill_gate[i] is true
+```
+
+Where `jerk_mag` is the same quantity already computed in
+`hit_detection_pipeline.py` (`add_jerk_columns`): `sqrt(jerk_ax² + jerk_ay²
++ jerk_az²)`, the causal rate-of-change of raw acceleration. `dt[i]` is the
+real elapsed time since the previous sample, in seconds — multiplying by
+`dt` (rather than just summing samples) makes the total independent of the
+device's native sampling rate (100-150Hz, varies by phone), so two
+identical runs recorded on different phones score the same.
+
+**Why jerk rather than raw `g_mag` or gyroscope magnitude:** `g_mag` alone
+conflates "held at 2g through one long carved turn" with "one sharp
+jolt" — same average, very different physical load. Jerk (the *rate of
+change* of acceleration) is closer to what actually stresses the body:
+impacts, chatter, sudden edge sets. This is the same style of metric
+sports-science IMU systems use for athlete workload monitoring (e.g.
+Catapult's "PlayerLoad": accumulated `sqrt(Δax² + Δay² + Δaz²)`).
+
+### Optional second metric: rotational load
+
+If rotation-heavy stress (spins, rapid edge-to-edge angular velocity)
+matters separately from translational/impact stress, track it as its own
+number rather than merging it into `session_load`:
+
+```
+rotational_load += gyro_mag[i] * dt[i]     # only while downhill_gate[i] is true
+```
+
+`gyro_mag` = magnitude of the raw gyroscope vector (not yet a column in
+this pipeline; would need to be added analogous to `g_mag`). Accelerometer
+and gyroscope jerk/rate quantities represent physiologically different
+kinds of load, so keeping them as two separate totals (rather than one
+combined score) preserves that distinction rather than muddying it.
+
+### The "only downhill" gate
+
+No existing signal in this pipeline is validated for this yet. Candidate
+approaches, roughly in order of expected reliability:
+
+1. **`altitude.csv`** (currently unused everywhere else in this pipeline)
+   — gate on a smoothed/trailing altitude trend being negative
+   (descending) over some window (e.g. 5-10s), to avoid noise flipping the
+   gate on small bumps or brief stops.
+2. **The phone's own `run_state`** signal. This was dropped from the *hit
+   classifier's training features* (see `DROP_FROM_MOTION_COLUMNS` in
+   `hit_detection_pipeline.py`) because training the classifier on it
+   would just teach it to imitate the phone's existing deterministic
+   model — that objection doesn't apply here, since this is an
+   operational gate, not a training feature. If `run_state` already
+   reliably flags "on a downhill run" vs. lift/flat, it's likely the
+   simplest signal to reuse.
+3. A speed-based proxy, if GPS/speed data is available in a form not yet
+   reflected in this repo.
+
+Before committing to one of these, it's worth checking a sample session's
+`altitude.csv` and `run_state` values to see which is actually reliable —
+neither has been validated against ground truth for this purpose yet.
 
 ## Open questions / next steps
 
